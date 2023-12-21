@@ -1,3 +1,6 @@
+install:
+	poetry install
+
 start:
 	poetry run python manage.py runserver
 
@@ -9,3 +12,4 @@ migrate:
 
 lint:
 	poetry run flake8 task_manager
+
