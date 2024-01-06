@@ -30,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = True
 
 ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]', 'deu-task-manager.onrender.com']
 
@@ -89,10 +89,10 @@ WSGI_APPLICATION = 'task_manager.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-        'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3',
-        conn_max_age=600,
-    )
+        'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
+    }
     }
 
 # Password validation
@@ -157,17 +157,17 @@ CSRF_TRUSTED_ORIGINS = [
     'https://0.0.0.0',
 ]
 
-TESTING = 'test' in sys.argv
+# TESTING = 'test' in sys.argv
 
-if TESTING:
-    ROLLBAR = {
-        'enabled': False,
-        'access_token': None
-    }
-else:
-    ROLLBAR = {
-        'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
-        'environment': 'development' if DEBUG else 'production',
-        'code_version': '1.0',
-        'root': BASE_DIR,
-    }
+# if TESTING:
+#     ROLLBAR = {
+#         'enabled': False,
+#         'access_token': None
+#     }
+# else:
+#     ROLLBAR = {
+#         'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
+#         'environment': 'development' if DEBUG else 'production',
+#         'code_version': '1.0',
+#         'root': BASE_DIR,
+#     }

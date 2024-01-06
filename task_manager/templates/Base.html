@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
-    {% load bootstrap4 %}
+    {% load django_bootstrap5 %}
     {% load i18n %}
     <meta charset="UTF-8">
     <title>{% translate 'Task Manager' %}</title>
@@ -17,6 +17,6 @@
         {% block content %}
         {% endblock %}
     </main>
-    {% bootstrap_javascript jquery='full' %}
+    {% bootstrap_javascript %}
 </body>
 </html>
