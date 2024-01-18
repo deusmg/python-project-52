@@ -19,6 +19,7 @@ django-bootstrap5 = "^23.4"
 whitenoise = "^6.6.0"
 django-filter = "^23.5"
 faker = "^22.2.0"
+rollbar = "^1.0.0"
 
 
 [tool.poetry.group.dev.dependencies]

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import dj_database_url
 import os
+import sys
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -67,6 +68,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
 ]
 
 ROOT_URLCONF = 'task_manager.urls'
@@ -171,3 +173,18 @@ CSRF_TRUSTED_ORIGINS = [
     'https://0.0.0.0',
     'https://deu-task-manager.onrender.com',
 ]
+
+TESTING = 'test' in sys.argv
+
+if TESTING:
+    ROLLBAR = {
+        'enabled': False,
+        'access_token': None
+    }
+else:
+    ROLLBAR = {
+        'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
+        'environment': 'development' if DEBUG else 'production',
+        'code_version': '1.0',
+        'root': BASE_DIR,
+    }
