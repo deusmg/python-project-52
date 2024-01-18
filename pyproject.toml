@@ -21,6 +21,9 @@ django-filter = "^23.5"
 faker = "^22.2.0"
 
 
+[tool.poetry.group.dev.dependencies]
+coverage = "^7.4.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
