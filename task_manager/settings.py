@@ -50,7 +50,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'task_manager',
     'task_manager.users',
+    'task_manager.statuses',
+    'task_manager.tasks',
+    'task_manager.labels',
     'django_bootstrap5',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -117,18 +121,21 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    # },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 3,
+        }
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
 ]
 
 
@@ -166,7 +173,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://*.railway.app',
     'https://127.0.0.1',
     'https://localhost',
     'https://0.0.0.0',

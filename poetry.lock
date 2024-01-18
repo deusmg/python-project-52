@@ -67,6 +67,20 @@ files = [
 Django = ">=3.2"
 
 [[package]]
+name = "django-filter"
+version = "23.5"
+description = "Django-filter is a reusable Django application for allowing users to filter querysets dynamically."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "django-filter-23.5.tar.gz", hash = "sha256:67583aa43b91fe8c49f74a832d95f4d8442be628fd4c6d65e9f811f5153a4e5c"},
+    {file = "django_filter-23.5-py3-none-any.whl", hash = "sha256:99122a201d83860aef4fe77758b69dda913e874cc5e0eaa50a86b0b18d708400"},
+]
+
+[package.dependencies]
+Django = ">=3.2"
+
+[[package]]
 name = "gunicorn"
 version = "21.2.0"
 description = "WSGI HTTP Server for UNIX"
@@ -247,4 +261,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "d28f086ddc6453e208897689e02aae8e27d8aa7d566fdf49e3fd9372a07fadc1"
+content-hash = "453107ecf6c12c242e4653288f3d77a6ce088e3e5008d802c37ae86c4ac16a06"
