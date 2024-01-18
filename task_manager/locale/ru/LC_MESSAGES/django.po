@@ -166,18 +166,21 @@ msgstr "Задача успешно удалена"
 msgid "Only its author can delete a task"
 msgstr "Задачу может удалить только ее автор"
 
-#: task_manager/templates/base.html:7 task_manager/templates/index.html:9
 #: task_manager/templates/navbar.html:4
 msgid "Task Manager"
 msgstr "Менеджер задач"
 
+#: task_manager/templates/base.html:7 task_manager/templates/index.html:9
+msgid "Hello from Hexlet!"
+msgstr "Привет от Хекслета!"
+
 #: task_manager/templates/index.html:10
-msgid "Try a simple task manager"
-msgstr "Попробуй простое приложение Менеджер задач"
+msgid "Practical Programming Courses"
+msgstr "Практические курсы по программированию"
 
 #: task_manager/templates/index.html:12
-msgid "Get Started"
-msgstr "Попробовать"
+msgid "Learn more"
+msgstr "Узнать больше"
 
 #: task_manager/templates/labels/delete.html:8
 msgid "Label remove"

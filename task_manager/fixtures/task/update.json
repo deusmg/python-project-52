@@ -1,0 +1,16 @@
+{
+    "valid": {
+      "name": "Valid",
+      "description": "valid description",
+      "author": 1,
+      "status": 1,
+      "executor": 1
+    },
+    "already_exists": {
+      "name": "Task",
+      "description": "valid description",
+      "author": 1,
+      "status": 1,
+      "executor": 1
+    }
+}

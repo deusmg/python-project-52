@@ -1,0 +1,11 @@
+{
+  "valid": {
+    "name": "Valid"
+  },
+  "empty_name": {
+    "name": ""
+  },
+  "already_exists": {
+    "name": "Existed"
+  }
+}
