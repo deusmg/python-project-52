@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import handler404, handler500
 from .views import IndexView, UserLoginView, UserLogoutView
 
 urlpatterns = [
@@ -28,3 +29,13 @@ urlpatterns = [
     path('logout/', UserLogoutView.as_view(), name='logout'),
     path('admin/', admin.site.urls),
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        
+    ]
+else:
+    urlpatterns += [
+        path('404/', handler404, {'exception': Exception('Not Found')}),
+        path('500/', handler500, {'exception': Exception('Internal Server Error')}),
+    ]
