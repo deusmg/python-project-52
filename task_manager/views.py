@@ -4,20 +4,11 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.utils.translation import gettext as _
-from django.shortcuts import render
-from django.http import HttpResponse
 
 
 class IndexView(TemplateView):
     template_name = 'index.html'
-    def get(self, request, *args, **kwargs):
-        try:
-            a = None
-            a.hello() # Creating an error with an invalid line of code
-            return HttpResponse("Hello, world. You're at the pollapp index.")
-        except Exception as e:
-            report_exception(request, extra_data={'my_custom_info': 'some additional info'})
-            raise e
+
 
 class UserLoginView(SuccessMessageMixin, LoginView):
     template_name = 'form.html'
