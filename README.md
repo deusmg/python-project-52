@@ -9,4 +9,4 @@
 ## Install  
 - Clone repo: `git clone https://github.com/deusmg/python-project-52.git`
 - Install dependencies: `make install`
-- Run development server: `make dev`
+- Run development server: `make start`
