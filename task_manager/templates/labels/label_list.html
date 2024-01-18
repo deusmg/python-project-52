@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+{% block content %}
+<div class="container wrapper flex-grow-1">
+    <h1 class="my-4">{% translate 'Labels' %}</h1>
+    <a class="btn btn-primary mb-3" href="{% url 'label_create' %}">{% translate 'Create label' %}</a>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>{% translate 'ID' %}</th>
+            <th>{% translate 'Name' %}</th>
+            <th>{% translate 'Creation date' %}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for label in labels %}
+          <tr>
+            <td>{{ label.id }}</td>
+            <td>{{ label.name }}</td>
+            <td>{{ label.creation_date|date:"d.m.Y H:i" }}</td>
+            <td>
+              <a href="{% url 'label_update' pk=label.pk %}">{% translate 'Update' %}</a>
+              <br>
+              <a href="{% url 'label_delete' pk=label.pk %}">{% translate 'Delete' %}</a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

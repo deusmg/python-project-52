@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    {% load django_bootstrap5 %}
+    {% load i18n %}
+    <meta charset="UTF-8">
+    <title>{% translate 'Task Manager' %}</title>
+    {% bootstrap_css %}
+
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <header>
+        {% include 'navbar.html' %}
+    </header>
+    <main class="container wrapper flex-grow-1">
+        {% bootstrap_messages %}
+        {% block content %}
+        {% endblock %}
+    </main>
+    {% bootstrap_javascript %}
+</body>
+</html>
