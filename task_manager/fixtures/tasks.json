@@ -1,0 +1,28 @@
+[
+    {
+      "model": "tasks.task",
+      "pk": 1,
+      "fields": {
+        "name": "Task",
+        "description": "Make task",
+        "author": 1,
+        "executor": 1,
+        "status": 1,
+        "creation_date": "2023-09-19T09:58:58.807Z",
+        "labels": [1]
+      }
+    },
+    {
+      "model": "tasks.task",
+      "pk": 3,
+      "fields": {
+        "name": "Very important task",
+        "description": "Make very important task",
+        "author": 2,
+        "executor": 2,
+        "status": 2,
+        "creation_date": "2023-09-19T09:58:58.807Z",
+        "labels": [1, 2]
+      }
+    }
+  ]

@@ -1,75 +1,95 @@
-from django.test import TestCase, Client
-from django.urls import reverse_lazy
-from http import HTTPStatus
-from django.contrib.auth import get_user_model
-from faker import Faker
+from django.test import TestCase
+from task_manager.users.models import User
 from task_manager.statuses.models import Status
+from django.urls import reverse_lazy
 
 
-User = get_user_model()
+class TestStatusCreate(TestCase):
 
-class StatusesTest(TestCase):
-    """Test statuses."""
+    fixtures = ['statuses.json', 'users.json']
 
-    def setUp(self):
-        """Create test user and status."""
-        self.client = Client()
-        self.faker = Faker()
-        self.username = self.faker.user_name()
-        self.password = self.faker.password(length=10)
-        self.user = User.objects.create_user(
-            username=self.username,
-            password=self.password,
-        )
-        self.user.save()
-        self.name = self.faker.pystr()
-        self.status = Status.objects.create(
-            name=self.name,
-        )
-        self.status.save()
+    def test_create_logout(self):
+        response = self.client.get(reverse_lazy('status_create'))
+        self.assertEqual(response.status_code, 302)
 
-    def tearDown(self):
-        """Teardown database."""
-        self.user.delete()
-        self.status.delete()
-
-    def test(self):
-        """Tests for statuses."""
-        self.client.force_login(self.user)
-        response = self.client.get(
-            reverse_lazy('statuses'),
-        )
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self._test_create_status()
-        self._test_update_status(self.status)
-        self._test_delete_status(self.status)
-
-    def _test_create_status(self):
+    def test_create_status(self):
+        user = User.objects.get(pk=1)
+        self.client.force_login(user=user)
+        response = self.client.get(reverse_lazy('status_create'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Status.objects.all().count(), 2)
         response = self.client.post(
             reverse_lazy('status_create'),
-            {'name': 'testStatus'},
+            {'name': 'status'}
         )
-        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertEqual(Status.objects.all().count(), 3)
 
-    def _test_update_status(self, status):
-        response = self.client.post(
-            reverse_lazy(
-                'status_update',
-                args=(status.id,),
-            ),
-            {'name': 'test'},
-        )
-        changed_status = Status.objects.get(name='test')
-        self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertEqual(status.id, changed_status.id)
 
-    def _test_delete_status(self, status):
+class TestUpdateStatus(TestCase):
+
+    fixtures = ['statuses.json', 'users.json']
+
+    def test_update_logout(self):
+        response = self.client.get(reverse_lazy('status_update', kwargs={'pk': 1}))
+        self.assertEqual(response.status_code, 302)
+
+    def test_status_update(self):
+        user = User.objects.get(pk=1)
+        self.client.force_login(user=user)
+        response = self.client.get(reverse_lazy('status_update', kwargs={'pk': 1}))
+        self.assertEqual(response.status_code, 200)
         response = self.client.post(
-            reverse_lazy(
-                'status_delete',
-                args=(status.id,),
-            ),
+            reverse_lazy('status_update', kwargs={'pk': 1}),
+            {'name': 'Started'}
         )
-        self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        with self.assertRaises(status.DoesNotExist):
-            Status.objects.get(pk=status.id)
+        status = Status.objects.get(pk=1)
+        self.assertEqual(status.name, 'Started')
+
+
+class TestDeleteStatus(TestCase):
+
+    fixtures = ['statuses.json', 'users.json']
+
+    def test_delete_logout(self):
+        response = self.client.get(reverse_lazy('status_delete', kwargs={'pk': 1}))
+        self.assertEqual(response.status_code, 302)
+
+    def test_delete_status(self):
+        user = User.objects.get(pk=1)
+        self.client.force_login(user=user)
+        response = self.client.get(reverse_lazy('status_delete', kwargs={'pk': 1}))
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post(
+            reverse_lazy('status_delete', kwargs={'pk': 1})
+        )
+        statuses = Status.objects.all()
+        self.assertEqual(len(statuses), 1)
+
+
+class DeleteConnectedStatus(TestCase):
+
+    fixtures = ['labels.json', 'users.json', 'tasks.json', 'statuses.json']
+
+    def test_delete_with_conn(self):
+        user = User.objects.get(pk=1)
+        status = Status.objects.get(pk=1)
+        self.assertEqual(Status.objects.all().count(), 2)
+        self.client.force_login(user=user)
+        self.client.get(reverse_lazy('status_delete',
+                        kwargs={'pk': status.id}))
+        self.assertEqual(Status.objects.all().count(), 2)
+
+
+class TestStatusesList(TestCase):
+
+    fixtures = ['statuses.json', 'users.json']
+
+    def test_list_logout(self):
+        response = self.client.get(reverse_lazy('statuses'))
+        self.assertEqual(response.status_code, 302)
+
+    def test_list_login(self):
+        user = User.objects.get(pk=1)
+        self.client.force_login(user=user)
+        response = self.client.get(reverse_lazy('statuses'))
+        self.assertEqual(response.status_code, 200)

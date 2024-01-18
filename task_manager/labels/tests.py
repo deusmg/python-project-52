@@ -1,75 +1,95 @@
-from django.test import TestCase, Client
-from django.urls import reverse_lazy
-from http import HTTPStatus
-from django.contrib.auth import get_user_model
-from faker import Faker
+from django.test import TestCase
 from task_manager.labels.models import Label
+from task_manager.users.models import User
+from django.urls import reverse_lazy
 
 
-User = get_user_model()
+class TestLabelCreate(TestCase):
 
-class LabelsTest(TestCase):
-    """Test labels."""
+    fixtures = ['labels.json', 'users.json']
 
-    def setUp(self):
-        """Create test user and label."""
-        self.client = Client()
-        self.faker = Faker()
-        self.username = self.faker.user_name()
-        self.password = self.faker.password(length=10)
-        self.user = User.objects.create_user(
-            username=self.username,
-            password=self.password,
-        )
-        self.user.save()
-        self.name = self.faker.pystr()
-        self.label = Label.objects.create(
-            name=self.name,
-        )
-        self.label.save()
+    def test_create_logout(self):
+        response = self.client.get(reverse_lazy('label_create'))
+        self.assertEqual(response.status_code, 302)
 
-    def tearDown(self):
-        """Teardown database."""
-        self.user.delete()
-        self.label.delete()
-
-    def test(self):
-        """Tests for labels."""
-        self.client.force_login(self.user)
-        response = self.client.get(
-            reverse_lazy('labels'),
-        )
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self._test_create_label()
-        self._test_update_label(self.label)
-        self._test_delete_label(self.label)
-
-    def _test_create_label(self):
+    def test_create_label(self):
+        user = User.objects.get(pk=1)
+        self.client.force_login(user=user)
+        response = self.client.get(reverse_lazy('label_create'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Label.objects.all().count(), 2)
         response = self.client.post(
             reverse_lazy('label_create'),
-            {'name': 'test label'},
+            {'name': 'label'}
         )
-        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertEqual(Label.objects.all().count(), 3)
 
-    def _test_update_label(self, label):
-        response = self.client.post(
-            reverse_lazy(
-                'label_update',
-                args=(label.id,),
-            ),
-            {'name': 'test'},
-        )
-        changed_label = Label.objects.get(name='test')
-        self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertEqual(label.id, changed_label.id)
 
-    def _test_delete_label(self, label):
+class TestUpdateLabel(TestCase):
+
+    fixtures = ['labels.json', 'users.json']
+
+    def test_update_logout(self):
+        response = self.client.get(reverse_lazy('label_update', kwargs={'pk': 1}))
+        self.assertEqual(response.status_code, 302)
+
+    def test_label_update(self):
+        user = User.objects.get(pk=1)
+        self.client.force_login(user=user)
+        response = self.client.get(reverse_lazy('label_update', kwargs={'pk': 1}))
+        self.assertEqual(response.status_code, 200)
         response = self.client.post(
-            reverse_lazy(
-                'label_delete',
-                args=(label.id,),
-            ),
+            reverse_lazy('label_update', kwargs={'pk': 1}),
+            {'name': 'Testing'}
         )
-        self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        with self.assertRaises(Label.DoesNotExist):
-            Label.objects.get(pk=label.id)
+        label = Label.objects.get(pk=1)
+        self.assertEqual(label.name, 'Testing')
+
+
+class TestDeleteLabel(TestCase):
+
+    fixtures = ['labels.json', 'users.json']
+
+    def test_delete_logout(self):
+        response = self.client.get(reverse_lazy('label_delete', kwargs={'pk': 1}))
+        self.assertEqual(response.status_code, 302)
+
+    def test_delete_label(self):
+        user = User.objects.get(pk=1)
+        self.client.force_login(user=user)
+        response = self.client.get(reverse_lazy('label_delete', kwargs={'pk': 1}))
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post(
+            reverse_lazy('label_delete', kwargs={'pk': 1})
+        )
+        labels = Label.objects.all()
+        self.assertEqual(len(labels), 1)
+
+
+class DeleteConnectedLabel(TestCase):
+
+    fixtures = ['labels.json', 'users.json', 'tasks.json', 'statuses.json']
+
+    def test_delete_with_conn(self):
+        label = Label.objects.get(pk=1)
+        user = User.objects.get(pk=1)
+        self.assertEqual(Label.objects.all().count(), 2)
+        self.client.force_login(user=user)
+        self.client.get(reverse_lazy('label_delete',
+                        kwargs={'pk': label.id}))
+        self.assertEqual(Label.objects.all().count(), 2)
+
+
+class TestLabelsList(TestCase):
+
+    fixtures = ['labels.json', 'users.json']
+
+    def test_list_logout(self):
+        response = self.client.get(reverse_lazy('labels'))
+        self.assertEqual(response.status_code, 302)
+
+    def test_list__login(self):
+        user = User.objects.get(pk=1)
+        self.client.force_login(user=user)
+        response = self.client.get(reverse_lazy('labels'))
+        self.assertEqual(response.status_code, 200)

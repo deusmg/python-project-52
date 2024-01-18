@@ -1,0 +1,18 @@
+[
+    {
+      "model": "labels.label",
+      "pk": 1,
+      "fields": {
+        "name": "Testing",
+        "creation_date": "2023-09-19T09:58:58.807Z"
+      }
+    },
+    {
+      "model": "labels.label",
+      "pk": 2,
+      "fields": {
+        "name": "Development",
+        "creation_date": "2022-09-19T09:58:58.807Z"
+      }
+    }
+]
