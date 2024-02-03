@@ -12,6 +12,3 @@ class LabelUpdateForm(ModelForm):
     class Meta:
         model = Label
         fields = ('name',)
-
-    def clean_name(self):
-        return self.cleaned_data.get('name')

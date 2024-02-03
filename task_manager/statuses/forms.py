@@ -16,6 +16,3 @@ class StatusUpdateForm(ModelForm):
         fields = (
             'name',
         )
-
-    def clean_name(self):
-        return self.cleaned_data.get('name')
