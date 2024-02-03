@@ -46,6 +46,7 @@ msgstr "Метки"
 #: task_manager/tasks/views.py:41 task_manager/tasks/views.py:62
 #: task_manager/tasks/views.py:80 task_manager/users/views.py:43
 #: task_manager/users/views.py:18
+#: task_manager/mixins.py.py:35
 msgid "You must to be log in"
 msgstr "Вы не авторизованы! Пожалуйста, выполните вход."
 
