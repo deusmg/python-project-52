@@ -3,7 +3,6 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext as _
 from django.conf import settings
-
 from .models import User
 from .forms import UserCreateForm, UserUpdateForm
 from task_manager.mixins import (
@@ -25,11 +24,10 @@ class UserListView(ListView):
 
 
 class UserCreateView(SuccessMessageMixin, CreateView):
+    template_name = 'users/create.html'
     model = User
     form_class = UserCreateForm
     success_url = reverse_lazy('login')
-    template_name = 'users/create.html'
-    success_message = _('User created successfully')
 
 
 class UserUpdateView(BaseUserView, SuccessMessageMixin, UserPermissionMixin, UpdateView):
