@@ -28,29 +28,20 @@ class UserCreateView(SuccessMessageMixin, CreateView):
     model = User
     form_class = UserCreateForm
     success_url = reverse_lazy('login')
-    template_name = 'form.html'
+    template_name = 'users/create.html'
     success_message = _('User created successfully')
-    extra_context = {
-        'header': _('Create User'),
-        'button': _('Register')
-    }
 
 
 class UserUpdateView(BaseUserView, SuccessMessageMixin, UserPermissionMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
-    template_name = 'form.html'
+    template_name = 'users/update.html'
 
     success_url = reverse_lazy('users')
     success_message = _('User updated successfully')
 
     permission_message = _('You do not have permission to edit another user.')
     permission_url = success_url
-
-    extra_context = {
-        'header': _('Update User'),
-        'button': _('Update')
-    }
 
 
 class UserDeleteView(BaseUserView,
