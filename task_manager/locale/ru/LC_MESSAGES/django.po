@@ -291,7 +291,7 @@ msgstr "Имя пользователя"
 msgid "Full name"
 msgstr "Полное имя"
 
-#: task_manager/users/views.py:23
+#: task_manager/users/views.py:31
 msgid "User created successfully"
 msgstr "Пользователь успешно зарегистрирован"
 
@@ -303,7 +303,7 @@ msgstr "Регистрация"
 msgid "Register"
 msgstr "Зарегистрировать"
 
-#: task_manager/users/views.py:38
+#: task_manager/users/views.py:40
 msgid "User updated successfully"
 msgstr "Пользователь успешно изменен"
 
