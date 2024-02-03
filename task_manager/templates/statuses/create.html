@@ -1,0 +1,19 @@
+{% extends 'form_generic.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="container">
+  <h1 class="my-4">{% trans "Create status" %}</h1>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group mt-3 col-md-6">
+        <label for="id_name">{% trans "Name" %}</label>
+        <input type="text" class="form-control" id="id_name" name="name" placeholder="{% trans 'Name' %}">
+    </div>
+    </div>
+    <div class="form-group mt-4">
+        <button type="submit" class="btn btn-primary mb-3">{% trans "Create" %}</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

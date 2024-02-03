@@ -22,25 +22,17 @@ class StatusListView(BaseStatusView, ListView):
 class StatusCreateView(BaseStatusView, SuccessMessageMixin, CreateView):
     model = Status
     form_class = StatusCreateForm
-    template_name = 'form.html'
+    template_name = 'statuses/create.html'
     success_url = reverse_lazy('statuses')
     success_message = _('Status created successfully')
-    extra_context = {
-        'header': _('Create status'),
-        'button': _('Create'),
-    }
 
 
 class StatusUpdateView(BaseStatusView, SuccessMessageMixin, UpdateView):
     model = Status
     form_class = StatusUpdateForm
-    template_name = 'form.html'
+    template_name = 'statuses/update.html'
     success_url = reverse_lazy('statuses')
     success_message = _('Status updated successfully')
-    extra_context = {
-        'header': _('Update status'),
-        'button': _('Update'),
-    }
 
 
 class StatusDeleteView(BaseStatusView,

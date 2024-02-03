@@ -23,25 +23,17 @@ class LabelListView(BaseLabelView, ListView):
 class LabelCreateView(BaseLabelView, SuccessMessageMixin, CreateView):
     model = Label
     form_class = LabelCreateForm
-    template_name = 'form.html'
+    template_name = 'labels/create.html'
     success_url = reverse_lazy('labels')
     success_message = _('Label created successfully')
-    extra_context = {
-        'header': _('Create label'),
-        'button': _('Create'),
-    }
 
 
 class LabelUpdateView(BaseLabelView, SuccessMessageMixin, UpdateView):
     model = Label
     form_class = LabelUpdateForm
-    template_name = 'form.html'
+    template_name = 'labels/update.html'
     success_url = reverse_lazy('labels')
     success_message = _('Label updated successfully')
-    extra_context = {
-        'header': _('Update label'),
-        'button': _('Update'),
-    }
 
 
 class LabelDeleteView(BaseLabelView, ObjectDeleteProtectionMixin, SuccessMessageMixin, DeleteView):
