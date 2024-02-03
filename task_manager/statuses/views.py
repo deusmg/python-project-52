@@ -43,7 +43,10 @@ class StatusUpdateView(BaseStatusView, SuccessMessageMixin, UpdateView):
     }
 
 
-class StatusDeleteView(BaseStatusView, ObjectDeleteProtectionMixin, SuccessMessageMixin, DeleteView):
+class StatusDeleteView(BaseStatusView,
+                       ObjectDeleteProtectionMixin,
+                       SuccessMessageMixin,
+                       DeleteView):
     model = Status
     template_name = 'statuses/delete.html'
     success_url = reverse_lazy('statuses')

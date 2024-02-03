@@ -6,7 +6,11 @@ from django.conf import settings
 
 from .models import User
 from .forms import UserCreateForm, UserUpdateForm
-from task_manager.mixins import UserPermissionMixin, UserAuthRequiredMixin, ObjectDeleteProtectionMixin
+from task_manager.mixins import (
+    UserPermissionMixin,
+    UserAuthRequiredMixin,
+    ObjectDeleteProtectionMixin,
+)
 
 
 class BaseUserView(UserAuthRequiredMixin):
@@ -49,7 +53,11 @@ class UserUpdateView(BaseUserView, SuccessMessageMixin, UserPermissionMixin, Upd
     }
 
 
-class UserDeleteView(BaseUserView, ObjectDeleteProtectionMixin, UserPermissionMixin, SuccessMessageMixin, DeleteView):
+class UserDeleteView(BaseUserView,
+                     ObjectDeleteProtectionMixin,
+                     UserPermissionMixin,
+                     SuccessMessageMixin,
+                     DeleteView):
     model = User
     template_name = 'users/delete.html'
 
