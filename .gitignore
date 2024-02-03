@@ -2,4 +2,4 @@
 __pycache__/
 .coverage
 coverage.xml
-.sqlite3
+db.sqlite3
