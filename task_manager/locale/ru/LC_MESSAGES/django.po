@@ -38,14 +38,14 @@ msgstr "Метка"
 msgid "Labels"
 msgstr "Метки"
 
-#: task_manager/labels/views.py:18 task_manager/labels/views.py:30
+#: task_manager/labels/views.py:13 task_manager/labels/views.py:30
 #: task_manager/labels/views.py:47 task_manager/labels/views.py:65
-#: task_manager/statuses/views.py:17 task_manager/statuses/views.py:29
+#: task_manager/statuses/views.py:13 task_manager/statuses/views.py:29
 #: task_manager/statuses/views.py:46 task_manager/statuses/views.py:63
-#: task_manager/tasks/views.py:19 task_manager/tasks/views.py:29
+#: task_manager/tasks/views.py:16 task_manager/tasks/views.py:29
 #: task_manager/tasks/views.py:41 task_manager/tasks/views.py:62
 #: task_manager/tasks/views.py:80 task_manager/users/views.py:43
-#: task_manager/users/views.py:65
+#: task_manager/users/views.py:14
 msgid "You must to be log in"
 msgstr "Вы не авторизованы! Пожалуйста, выполните вход."
 
