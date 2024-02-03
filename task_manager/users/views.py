@@ -5,6 +5,7 @@ from django.utils.translation import gettext as _
 from django.conf import settings
 from .models import User
 from .forms import UserCreateForm, UserUpdateForm
+from django.shortcuts import redirect
 from task_manager.mixins import (
     UserPermissionMixin,
     UserAuthRequiredMixin,
@@ -27,10 +28,12 @@ class UserCreateView(SuccessMessageMixin, CreateView):
     template_name = 'users/create.html'
     model = User
     form_class = UserCreateForm
+    success_url = reverse_lazy('login')
     success_message = _('User created successfully')
 
-    def get_success_url(self):
-        return reverse_lazy('login')
+    def form_valid(self, form):
+        super().form_valid(form)
+        return redirect('login')
 
 
 class UserUpdateView(BaseUserView, SuccessMessageMixin, UserPermissionMixin, UpdateView):
